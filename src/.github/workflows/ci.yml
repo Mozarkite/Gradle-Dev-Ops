@@ -1,0 +1,41 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Check out the repository
+      - uses: actions/checkout@v3
+
+      # 2. Set up JDK 17
+      - name: Set up Java 17
+        uses: actions/setup-java@v3
+        with:
+          distribution: temurin
+          java-version: 17
+
+      # 3. Build the project
+      - name: Build with Gradle
+        run: ./gradlew clean build
+
+      # 4. Run tests
+      - name: Run tests
+        run: ./gradlew test
+
+      # 5. Create distribution ZIP
+      - name: Build distribution ZIP
+        run: ./gradlew distZip
+
+      # 6. Upload ZIP as artifact
+      - name: Upload distribution
+        uses: actions/upload-artifact@v3
+        with:
+          name: sudoku-zip
+          path: build/distributions/*.zip
