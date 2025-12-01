@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test
 
 class SudokuTest {
 
-    // Helper to create board from 9-line representation like in file
+    //Helper to create board from 9-line representation like in file
     private fun boardOf(vararg lines: String): Array<IntArray> {
         val sudoku = Sudoku.fromLines(lines.toList())
         return sudoku.getBoardCopy()
@@ -27,7 +27,7 @@ class SudokuTest {
         val s = Sudoku.fromLines(lines.toList())
         val solved = s.solve()
         assertTrue(solved)
-        // check solved board contains no zeros
+        //check solved board contains no zeros
         val solvedBoard = s.getBoardCopy()
         for (r in 0..8) for (c in 0..8) assertTrue(solvedBoard[r][c] in 1..9)
     }
@@ -48,7 +48,7 @@ class SudokuTest {
         val s = Sudoku.fromLines(lines.toList())
         assertTrue(s.solve())
         val board = s.getBoardCopy()
-        // quick sanity check: each row sums to 45
+        //each row sums to 45
         for (r in 0..8) {
             assertEquals(45, board[r].sum())
         }
@@ -56,9 +56,9 @@ class SudokuTest {
 
     @Test
     fun `unsolvable puzzle detected`() {
-        // invalid board: two 5s in first row
+        //invalid board- two 5s in first row
         val lines = arrayOf(
-            "553..7...", // invalid (two 5s in row)
+            "553..7...", // invalid there are two 5s in a row
             "6..195...",
             ".98....6.",
             "8...6...3",
@@ -69,7 +69,7 @@ class SudokuTest {
             "....8..79"
         )
         val s = Sudoku.fromLines(lines.toList())
-        // Even if we allow maxIterations default, should not find solution
+        //Even if we allow maxIterations default,it should not find solution
         val solved = s.solve()
         assertFalse(solved)
     }
